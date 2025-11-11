@@ -200,4 +200,3 @@ Create summary views (per client, per route, per month)
 
 Build a Power BI model over the schema for performance visualization
 
-👤 Author
