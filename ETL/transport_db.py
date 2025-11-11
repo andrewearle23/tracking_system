@@ -5,7 +5,7 @@ from datetime import datetime
 import math
 
 # ========= CONFIGURATION =========
-EXCEL_FILE = r"C:\Users\Andrew Earle\OneDrive - Hodari Group\Desktop\transport_import.xlsx"
+EXCEL_FILE = r"YOUR_FILE_PATH"
 
 DB_CONFIG = {
     "host": "YOUR_DB_HOST",
@@ -278,4 +278,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
