@@ -8,10 +8,10 @@ import math
 EXCEL_FILE = r"C:\Users\Andrew Earle\OneDrive - Hodari Group\Desktop\transport_import.xlsx"
 
 DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "Lucky23lucky23$",
-    "database": "transport_operations",
+    "host": "YOUR_DB_HOST",
+    "user": "YOUR_DB_USER",
+    "password": "YOUR_DB_PASSWORD",
+    "database": "YOUR_DATABASE_NAME"
 }
 
 # ========= HELPER FUNCTIONS =========
@@ -278,3 +278,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
