@@ -1,0 +1,212 @@
+📦 Transport Operations ETL Loader
+
+Excel → Python → MySQL
+
+This script performs a full ETL (Extract, Transform, Load) process that converts structured transport-tracking data from Excel into a fully normalised MySQL database (transport_operations).
+It ensures cleaning, validation, referential integrity, and automatic dimension creation for transporters, clients, drivers, trucks, products, and locations.
+
+This ETL pipeline is designed for operational logistics data such as deal trips, dispatch movements, border events, and tracking milestones.
+
+🚀 Features
+✔ 1. Reads structured Excel transport/tracking data
+
+The script loads a defined Excel sheet and validates that all required columns exist.
+
+✔ 2. Cleans & standardises input data
+
+Handles NULL/blank values
+
+Cleans dates into proper Python date objects
+
+Normalises text values
+
+Ensures consistent formatting for IDs, drivers, and locations
+
+✔ 3. Auto-creates dimension records
+
+If a referenced entity does not exist in MySQL, the ETL automatically inserts it:
+
+Transporter
+
+Client
+
+Product
+
+Location
+
+Driver
+
+Truck
+
+Deal overview
+
+This removes the need to manually preload lookup tables.
+
+✔ 4. Inserts fact records into deal_trip
+
+Each row in the Excel sheet becomes a movement/dispatch record in MySQL.
+
+Duplicate trips are safely skipped using a primary-key check.
+
+✔ 5. Tracks and reports all insert counts
+
+At the end of the run, the script prints the number of rows inserted for each table.
+
+🧠 How the ETL Works
+1️⃣ Extract
+
+The script reads an Excel file containing dispatch details:
+
+Deal No.
+
+Load number
+
+Supplier invoice
+
+Transporter info
+
+Vehicle & trailers
+
+Driver info
+
+Border events
+
+Loading/Offloading timestamps
+
+Location info
+
+2️⃣ Transform
+
+The script:
+
+Converts invalid values to None
+
+Normalises date fields
+
+Formats driver ID numbers and names
+
+Ensures truck and location names are consistent
+
+Removes whitespace, handles missing values, and ensures type correctness
+
+3️⃣ Load
+
+The script connects to MySQL and:
+
+Inserts (or retrieves existing) lookup table entries
+
+Inserts deal_overview entries
+
+Inserts deal_trip fact records
+
+Commits every 500 rows for performance
+
+All operations are wrapped in safe, retry-aware INSERT operations.
+
+⚙️ Configuration
+
+Edit the top of the script before running:
+
+EXCEL_FILE = r"YOUR_FILE_PATH"
+
+DB_CONFIG = {
+    "host": "YOUR_DB_HOST",
+    "user": "YOUR_DB_USER",
+    "password": "YOUR_DB_PASSWORD",
+    "database": "YOUR_DATABASE_NAME"
+}
+
+
+No credentials are stored in the repo — always keep DB_CONFIG private.
+
+▶️ How to Run
+
+Install dependencies:
+
+pip install pandas mysql-connector-python openpyxl
+
+
+Ensure the MySQL schema exists (tables for transporter, client_ref, product_ref, location_ref, driver, truck, deal_overview, deal_trip).
+
+Run the script:
+
+python etl_loader.py
+
+
+View logs as records are inserted:
+
+Processed rows
+
+Duplicate trip notifications
+
+Final summary block
+
+📁 Expected Excel Columns
+
+The ETL validates that the following appear in the sheet:
+
+Deal No.
+Load #
+Supplier Invoice #
+Client Name
+Product
+Stock Code
+Loading Point
+Border of Exit
+Border of Entry
+Offloading Point
+Current Location
+Transporter
+Truck Status
+Truck REG #
+Trailer 1 REG #
+Trailer 2 REG #
+Driver Name
+ID No.
+Drivers Licence No.
+Nationality
+No. of Items
+Tonnage Dispatched
+Date: Loaded
+Date: Dispatched
+BoExit Arrived
+BoExit Departed
+BoEntry Date Arrived
+BoEntry Date Departed
+Date: Arrived Site
+Date: Offloaded
+
+
+If any are missing, the ETL stops immediately and alerts you.
+
+🧩 Database Tables Loaded
+
+This ETL populates:
+
+Dimension Tables
+
+transporter
+
+client_ref
+
+product_ref
+
+location_ref
+
+driver
+
+truck
+
+deal_overview
+
+Fact Table
+
+deal_trip
+
+This forms a complete transport-tracking model ready for analytics.
+
+🔒 Data Privacy Notice
+
+All example data and structures used in this ETL and repository are based on real operational environments, but all values have been fully anonymised and replaced with synthetic equivalents for confidentiality.
+
+No identifiable company or customer information is included.
