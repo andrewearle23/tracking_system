@@ -1,3 +1,20 @@
+📦 Transport Operations Data System
+
+Excel → Python ETL → MySQL → Power BI
+
+This project is an end-to-end data pipeline designed to manage, track, and analyse cross-border transport operations.
+It replaces manual spreadsheets with a fully integrated system comprising:
+
+A structured Excel data capture workbook
+
+A Python ETL process for automated loading
+
+A normalised MySQL database for logistics tracking
+
+Power BI dashboards (optional) for analysis
+
+All data used in this portfolio is based on real business logic but has been fully anonymised and replaced with synthetic values for security.
+
 🧱 1. MySQL Transport Operations Database
 
 A fully normalised schema that models all logistics activity:
